@@ -1,0 +1,5 @@
+# Godot project files
+*.gd linguist-language=GDScript
+*.tscn linguist-language=GDScript
+*.gdnlib linguist-language=GDScript
+*.gdns linguist-language=GDScript
