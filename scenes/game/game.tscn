@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://cdt0bnp83mptm"]
+
+[ext_resource type="Texture2D" uid="uid://38ojkjykgu4t" path="res://assets/background/rocks_2.png" id="1_dw35n"]
+[ext_resource type="Script" path="res://scenes/game/game.gd" id="1_vqil8"]
+[ext_resource type="PackedScene" uid="uid://dyapu70nyaui4" path="res://scenes/parallax_image/parallax_image.tscn" id="2_1rwbi"]
+[ext_resource type="PackedScene" uid="uid://h5d5uifgcoxl" path="res://scenes/scrolling_bg/scrolling_bg.tscn" id="2_bn3b5"]
+[ext_resource type="PackedScene" uid="uid://bvnvk65nbi5wi" path="res://scenes/plane/plane.tscn" id="2_ctir3"]
+[ext_resource type="Texture2D" uid="uid://ca6gmm75wxxuy" path="res://assets/background/sky.png" id="3_0u485"]
+[ext_resource type="PackedScene" uid="uid://dix00qf1md1tr" path="res://scenes/hud/hud.tscn" id="3_dq43t"]
+[ext_resource type="PackedScene" uid="uid://b5hliqdo2c5as" path="res://scenes/barrier/barrier.tscn" id="3_m15qo"]
+[ext_resource type="Texture2D" uid="uid://dj7byns2001s8" path="res://assets/background/clouds_2.png" id="4_x202q"]
+[ext_resource type="Texture2D" uid="uid://dybedlkli3pqk" path="res://assets/background/rocks_1.png" id="5_am0hc"]
+[ext_resource type="PackedScene" uid="uid://vdljtnoqe14c" path="res://scenes/game_over_ui/game_over_ui.tscn" id="5_yi14b"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_vqil8")
+
+[node name="ParallaxBG" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, 427)
+
+[node name="ParallaxImage" parent="ParallaxBG" instance=ExtResource("2_1rwbi")]
+scroll_scale = Vector2(0, 0)
+repeat_times = 999
+texture = ExtResource("3_0u485")
+
+[node name="ParallaxImage2" parent="ParallaxBG" instance=ExtResource("2_1rwbi")]
+scroll_scale = Vector2(0.3, 0.3)
+autoscroll = Vector2(-20, 0)
+repeat_times = 999
+texture = ExtResource("4_x202q")
+
+[node name="ParallaxImage3" parent="ParallaxBG" instance=ExtResource("2_1rwbi")]
+scroll_scale = Vector2(0.5, 0.5)
+autoscroll = Vector2(-50, 0)
+repeat_times = 999
+texture = ExtResource("5_am0hc")
+
+[node name="ParallaxImage4" parent="ParallaxBG" instance=ExtResource("2_1rwbi")]
+scroll_scale = Vector2(0.8, 0.8)
+autoscroll = Vector2(-80, 0)
+repeat_times = 999
+texture = ExtResource("1_dw35n")
+
+[node name="ScrollingBG" parent="." instance=ExtResource("2_bn3b5")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameOverUI" parent="CanvasLayer" instance=ExtResource("5_yi14b")]
+
+[node name="Hud" parent="CanvasLayer" instance=ExtResource("3_dq43t")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(427, 370)
+texture = ExtResource("1_dw35n")
+
+[node name="Plane" parent="." instance=ExtResource("2_ctir3")]
+position = Vector2(52, 201)
+
+[node name="Barrier" parent="." instance=ExtResource("3_m15qo")]
+
+[node name="Barrier2" parent="." instance=ExtResource("3_m15qo")]
+position = Vector2(0, 889)
+
+[node name="SpawnU" type="Marker2D" parent="."]
+position = Vector2(530, 340)
+
+[node name="SpawnL" type="Marker2D" parent="."]
+position = Vector2(530, 540)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 1.2
+autostart = true
+
+[node name="PipesHolder" type="Node" parent="."]
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
